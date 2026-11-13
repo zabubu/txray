@@ -1,0 +1,9 @@
+{
+  "from": "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",
+  "method": "personal_sign",
+  "message": "app.example.org wants you to sign in with your Ethereum account:\n0x5B38Da6a701c568545dCfcB03FcB875f56beddC4\n\nSign in to Example App.\n\nURI: https://app.example.org/login\nVersion: 1\nChain ID: 1\nNonce: 32891756aZ\nIssued At: 2026-11-13T09:00:00Z\nExpiration Time: 2030-01-01T00:00:00Z\n",
+  "context": {
+    "chain_id": 1,
+    "origin": "https://app-example-login.net"
+  }
+}

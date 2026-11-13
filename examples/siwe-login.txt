@@ -1,0 +1,11 @@
+app.example.org wants you to sign in with your Ethereum account:
+0x5B38Da6a701c568545dCfcB03FcB875f56beddC4
+
+Sign in to Example App.
+
+URI: https://app.example.org/login
+Version: 1
+Chain ID: 1
+Nonce: 32891756aZ
+Issued At: 2026-11-13T09:00:00Z
+Expiration Time: 2030-01-01T00:00:00Z

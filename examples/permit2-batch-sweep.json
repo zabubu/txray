@@ -1,0 +1,86 @@
+{
+  "types": {
+    "EIP712Domain": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "chainId",
+        "type": "uint256"
+      },
+      {
+        "name": "verifyingContract",
+        "type": "address"
+      }
+    ],
+    "PermitBatch": [
+      {
+        "name": "details",
+        "type": "PermitDetails[]"
+      },
+      {
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "sigDeadline",
+        "type": "uint256"
+      }
+    ],
+    "PermitDetails": [
+      {
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint160"
+      },
+      {
+        "name": "expiration",
+        "type": "uint48"
+      },
+      {
+        "name": "nonce",
+        "type": "uint48"
+      }
+    ]
+  },
+  "primaryType": "PermitBatch",
+  "domain": {
+    "name": "Permit2",
+    "chainId": 1,
+    "verifyingContract": "0x000000000022D473030F116dDEE9F6B43aC78BA3"
+  },
+  "message": {
+    "details": [
+      {
+        "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "amount": "1461501637330902918203684832716283019655932542975",
+        "expiration": "281474976710655",
+        "nonce": "0"
+      },
+      {
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "1461501637330902918203684832716283019655932542975",
+        "expiration": "281474976710655",
+        "nonce": "0"
+      },
+      {
+        "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "amount": "1461501637330902918203684832716283019655932542975",
+        "expiration": "281474976710655",
+        "nonce": "0"
+      },
+      {
+        "token": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "amount": "1461501637330902918203684832716283019655932542975",
+        "expiration": "281474976710655",
+        "nonce": "0"
+      }
+    ],
+    "spender": "0x7A3B9F1E2c4d5a6b8e9f0A1B2C3D4E5F6a7b8C9d",
+    "sigDeadline": "1893456000"
+  }
+}

@@ -1,0 +1,29 @@
+# Usage:
+#   txray keygen                       # or: docker compose run --rm txray keygen
+#   export TXRAY_API_KEY_HASHES=<sha256 printed by keygen>
+#   docker compose up --build
+services:
+  txray:
+    build: .
+    image: txray:local
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      TXRAY_API_KEY_HASHES: ${TXRAY_API_KEY_HASHES:?run `txray keygen` and export TXRAY_API_KEY_HASHES}
+      TXRAY_RPC_1: ${TXRAY_RPC_1:-https://ethereum-rpc.publicnode.com}
+      TXRAY_RATE_LIMIT: ${TXRAY_RATE_LIMIT:-120}
+      TXRAY_DENYLIST: /config/denylist.example.txt
+    volumes:
+      - txray-data:/data
+      - ./config:/config:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+volumes:
+  txray-data:

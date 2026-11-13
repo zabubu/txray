@@ -1,0 +1,91 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "txray"
+version = "0.1.0"
+description = "Pre-signing risk analysis for EVM transactions, EIP-712 signature requests and contract bytecode."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+keywords = ["ethereum", "evm", "security", "eip-712", "permit2", "phishing", "bytecode"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Security",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "fastapi>=0.110,<1.0",
+    "uvicorn>=0.29,<1.0",
+    "httpx>=0.27,<1.0",
+    "pydantic>=2.6,<3.0",
+    "pycryptodome>=3.20,<5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+txray = "txray.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/txray"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers -m 'not live'"
+filterwarnings = [
+    # Raised by starlette's TestClient on recent httpx versions; not our code.
+    "ignore:Using `httpx` with `starlette.testclient`",
+]
+markers = [
+    "live: tests that hit a real Ethereum JSON-RPC endpoint (set TXRAY_LIVE_RPC to enable)",
+]
+
+[tool.coverage.run]
+source = ["txray"]
+branch = true
+
+[tool.coverage.report]
+skip_covered = true
+show_missing = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "RUF", "N", "C4", "PT"]
+ignore = [
+    "S101",   # assert is fine in tests and for internal invariants
+    "RUF012", # mutable class attributes are used for pydantic/constant tables
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "N802", "PT012", "PT018"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["txray"]
+mypy_path = "src"
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["Crypto.*"]
+ignore_missing_imports = true

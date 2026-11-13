@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests
+      - run: ruff format --check src tests
+      - run: mypy
+      - run: pytest --cov --cov-report=term
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t txray:ci .
+      - name: smoke test
+        run: |
+          docker run -d --name txray -p 8080:8080 -e TXRAY_ALLOW_ANONYMOUS=1 txray:ci
+          for i in $(seq 1 30); do curl -fs http://127.0.0.1:8080/health && break; sleep 1; done
+          curl -fs -X POST http://127.0.0.1:8080/v1/analyze/typed-data \
+            -H 'content-type: application/json' \
+            --data "{\"typed_data\": $(cat examples/seaport-zero-price-listing.json), \"context\": {\"offline\": true}}" \
+            | grep -q '"verdict":"block"'
+          docker logs txray

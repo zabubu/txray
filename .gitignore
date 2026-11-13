@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Environments
+.venv/
+venv/
+.env
+.env.*
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Local data and configuration
+*.db
+*.db-wal
+*.db-shm
+data/
+txray.toml
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

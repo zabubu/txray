@@ -1,0 +1,21 @@
+# Copy to txray.toml and pass with `--config txray.toml` or TXRAY_CONFIG.
+# Environment variables (TXRAY_*) override values from this file.
+
+db_path = "data/txray.db"
+denylist = "config/denylist.example.txt"
+address_book = "config/address_book.example.txt"
+
+# Requests per minute and per API key (or per client IP in anonymous mode). 0 disables.
+rate_limit_per_minute = 120
+max_body_bytes = 262144
+code_cache_ttl = 3600
+rpc_timeout = 10.0
+
+log_level = "INFO"
+log_json = false
+
+# SHA-256 digests of accepted API keys (generate with `txray keygen`).
+api_key_hashes = []
+
+[rpc]
+1 = "https://ethereum-rpc.publicnode.com"
